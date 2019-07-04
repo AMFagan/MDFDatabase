@@ -12,8 +12,7 @@ class MDF:
     coe = None
     level = None
     pre_requisites = {'strict': [], 'recommended': [], 'other': []}
-    delivery = {'lectures': None, 'tutorial': None, 'assignments': None, 'laboratories': None, 'private study': None,
-                'total': None}
+    delivery = {}
     aims = ''
     learning_outcomes = ''
     syllabus = ''
