@@ -5,7 +5,7 @@ import mysql.connector as con
 
 sql = con.connect(host='localhost',
                   user='root',
-                  password='dapamaka',
+                  password=input("password: "),
                   database='mdfdatabase')
 
 cursor = sql.cursor()
@@ -19,9 +19,8 @@ for line in output:
     q = "SELECT class_code FROM classes WHERE class_id = %s"
 
     cursor.execute(q, (id0,))
-    this = cursor.fetchall()
+    this = cursor.fetchone()[0]
     cursor.execute(q, (id1,))
-    req = cursor.fetchall()
+    req = cursor.fetchone()[0]
 
-    print("Class %s requires completion of class %s" % (this, req))
-
+    print("%s <- %s" % (this, req))
