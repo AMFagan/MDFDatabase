@@ -5,18 +5,26 @@ from . import Module
 ROLES = (
     'Class Registrar',
     'Lecturer',
-    'Marker',
     'Assistant',
+    'Marker',
 )
 
 
 class Staff(models.Model):
     id_number = models.IntegerField(unique=True)
+    title = models.CharField(max_length=10, blank=True, default='')
     forename = models.TextField()
     surname = models.TextField()
 
+    def full_name(self):
+        return " ".join(filter(lambda x: x,
+                               [self.title, self.forename, self.surname]))
+
     def __str__(self):
-        return "%s %s (%s)" % (self.forename, self.surname, self.id_number)
+        return (
+                "%s (%s)" %
+                (self.full_name(), self.id_number)
+        )
 
 
 class Assignment(models.Model):
@@ -25,6 +33,11 @@ class Assignment(models.Model):
     role = EnumField(choices=ROLES)
     hours = models.IntegerField()
 
-    def __str__(self):
-        return "%s assigned to %s as %s" % (str(self.assignee), self.module.code, self.role)
+    class Meta:
+        unique_together = ('assignee', 'module')
 
+    def __str__(self):
+        return (
+                "%s assigned to %s as %s" %
+                (str(self.assignee), self.module.code, self.role)
+        )
