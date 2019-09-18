@@ -1,5 +1,5 @@
 from django.db import models
-from django_mysql.models import EnumField
+#from django_mysql.models import EnumField
 from . import Module
 
 ROLES = (
@@ -30,7 +30,7 @@ class Staff(models.Model):
 class Assignment(models.Model):
     assignee = models.ForeignKey(Staff, on_delete=models.CASCADE)
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
-    role = EnumField(choices=ROLES)
+    role = models.CharField(max_length=15)
     hours = models.IntegerField()
 
     class Meta:
@@ -38,6 +38,9 @@ class Assignment(models.Model):
 
     def __str__(self):
         return (
-                "%s assigned to %s as %s" %
-                (str(self.assignee), self.module.code, self.role)
+                "%s assigned to %s as %s for %s hours" %
+                (str(self.assignee), self.module.code, self.role, self.hours)
         )
+
+    def code(self):
+        return self.module.code

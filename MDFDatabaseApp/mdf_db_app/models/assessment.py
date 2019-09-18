@@ -1,14 +1,14 @@
 from django.db import models
 from . import Module
 
-from django_mysql.models import EnumField
+#from django_mysql.models import EnumField
 
 
 class Assessment(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
-    semester = EnumField(choices=('1', '2', '3'),
+    semester = models.CharField(max_length=1,
                          default='2')
-    week = EnumField(choices=tuple(str(i) for i in range(1, 13)) + ('E',),
+    week = models.CharField(max_length=2,
                      default='E'
                      )
     weight = models.IntegerField(default=0)

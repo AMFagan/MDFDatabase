@@ -1,0 +1,25 @@
+<html>
+<head>
+     <style>table, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <title> {{ staff.full_name }}</title>
+</head>
+<body>
+<h3> {{ staff.full_name }} </h3>
+<table>
+    <tr>
+        <td>Assignments</td>
+    </tr>
+    {% for a in assignments %}
+        <tr>
+            <td>
+                <a href="../modules/{{ a.code }}"> {{ a }} </a>
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>

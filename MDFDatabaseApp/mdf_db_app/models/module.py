@@ -1,6 +1,6 @@
 from typing import List
 
-from django_mysql.models import EnumField
+#from django_mysql.models import EnumField
 from django.db import models
 
 semesters = (
@@ -18,9 +18,9 @@ class Module(models.Model):
     code = models.CharField(max_length=5)
     name = models.CharField(max_length=100)
     credits = models.IntegerField(default=20)
-    semester = EnumField(choices=semesters)
-    elective = EnumField(choices=elective_options)
-    level = EnumField(choices=levels)
+    semester = models.CharField(max_length=5)
+    elective = models.CharField(max_length=2)
+    level = models.CharField(max_length=1)
     aims = models.TextField(default='', blank=True)
     learning_outcomes = models.TextField(default='', blank=True)
     syllabus = models.TextField(default='', blank=True)
@@ -123,5 +123,31 @@ class Module(models.Model):
             i += 1
         return out
 
-
+    def semesters(self):
+        out = {'1':{
+            '1':[], '2': [], '3':[], '4':[],
+            '5':[], '6':[], '7':[], '8':[],
+            '9':[], '10':[], '11':[], '12':[],
+            'E':[]
+            },
+               '2':{
+            '1':[], '2': [], '3':[], '4':[],
+            '5':[], '6':[], '7':[], '8':[],
+            '9':[], '10':[], '11':[], '12':[],
+            'E':[]
+            },
+               '3':{
+            '1':[], '2': [], '3':[], '4':[],
+            '5':[], '6':[], '7':[], '8':[],
+            '9':[], '10':[], '11':[], '12':[],
+            'E':[]
+            },
+        }
+        for coursework in self.coursework_set.all():
+            out[coursework.semester][coursework.week] += [coursework]
+        for project in self.project_set.all():
+            out[project.semester][project.week] += [project]
+        for exam in self.exam_set.all():
+            out[exam.semester][exam.week] += [exam]
+        return out
 
