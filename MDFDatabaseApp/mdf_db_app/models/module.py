@@ -1,6 +1,6 @@
 from typing import List
 
-#from django_mysql.models import EnumField
+from django_mysql.models import EnumField
 from django.db import models
 
 semesters = (
@@ -18,9 +18,10 @@ class Module(models.Model):
     code = models.CharField(max_length=5)
     name = models.CharField(max_length=100)
     credits = models.IntegerField(default=20)
-    semester = models.CharField(max_length=5)
-    elective = models.CharField(max_length=2)
-    level = models.CharField(max_length=1)
+
+    semester = EnumField(choices=semesters, default='1/2')
+    elective = EnumField(choices=elective_options, default='NE')
+    level = EnumField(choices=levels, default='1')
     aims = models.TextField(default='', blank=True)
     learning_outcomes = models.TextField(default='', blank=True)
     syllabus = models.TextField(default='', blank=True)
