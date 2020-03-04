@@ -108,3 +108,6 @@ output.txt
 
 # Pycharm Settings
 .idea/
+
+# Temp files:
+~\$*
