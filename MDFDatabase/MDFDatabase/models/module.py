@@ -38,7 +38,11 @@ class Module(models.Model):
                 )
 
     def list_pre_requisites(self) -> str:
-        return ', '.join([m.code for m in self.required_modules.all()])
+        return ', '.join(['<a href="%(s)s"> %(s)s</a>' % {'s':m.code} for m in self.required_modules.all()])
+
+    def list_required_for(self) -> str:
+        return ', '.join(['<a href="%(s)s"> %(s)s</a>' % {'s': m.code} for m in self.requirements.all()])
+
 
     def staff(self):
         out = {}

@@ -29,7 +29,10 @@
                 <td colspan="2">Academic Level: {{ module.level }}</td>
             </tr>
             <tr>
-                <td colspan="4">Pre-requisites: {{ module.list_pre_requisites }}</td>
+                <td colspan="4">Pre-requisites: {{ module.list_pre_requisites |safe }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">Required For: {{ module.list_required_for |safe }}</td>
             </tr>
         </tbody>
     </table>
