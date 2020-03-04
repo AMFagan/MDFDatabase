@@ -105,3 +105,6 @@ venv.bak/
 
 # Debug files to be ignored
 output.txt
+
+# Pycharm Settings
+.idea/

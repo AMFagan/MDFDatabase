@@ -32,7 +32,7 @@ class Assignment(models.Model):
     def __str__(self):
         return (
                 "%s assigned to %s as %s for %s hours" %
-                (str(self.assignee), self.module.code, StaffRoles.choices[self.role], self.hours)
+                (str(self.assignee), self.module.code, StaffRoles.choices[int(self.role)-1][1], self.hours)
         )
 
     def code(self):
