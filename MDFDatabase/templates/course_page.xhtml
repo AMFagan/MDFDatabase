@@ -1,0 +1,43 @@
+<html>
+<head>
+     <style>table, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <title> {{ course }}</title>
+</head>
+<body>
+<h3> {{ course }} </h3>
+<table>
+    <tr>
+        <td>Level</td>
+        <td>Semester</td>
+        <td>W1</td>
+        <td>W2</td>
+        <td>W3</td>
+        <td>W4</td>
+        <td>W5</td>
+        <td>W6</td>
+        <td>W7</td>
+        <td>W8</td>
+        <td>W9</td>
+        <td>W10</td>
+        <td>W11</td>
+        <td>W12</td>
+        <td>E</td>
+    </tr>
+    {% for level, levelvalues in levels.items %}
+        {% for semester, semestervalues in levelvalues.items %}
+            <tr>
+            <td> {{ level }}</td>
+            <td> {{ semester }}</td>
+            {% for week, assignment in semestervalues.items %}
+                <td>{% for a in assignment %}{{a}}{% if forloop.last is not True %}<br/>{% endif %}{% endfor %}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    {% endfor %}
+
+</table>
+</body>
+</html>

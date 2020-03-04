@@ -1,0 +1,30 @@
+<html>
+<head>
+     <style>table, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <title>Module Index</title>
+</head>
+<body>
+<h3> Module Index </h3>
+<table>
+    <tr>
+        <td>Code</td>
+        <td>Name</td>
+    </tr>
+    {% for m in entries %}
+        <tr>
+            <td>
+                <a href="modules/{{ m.code }}"> {{ m.code }} </a>
+            </td>
+            <td>
+                {{ m.name }}
+            </td>
+
+        </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>
