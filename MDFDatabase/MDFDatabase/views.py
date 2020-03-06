@@ -44,3 +44,13 @@ def course_index(request):
 def course(request, level, shorthand):
     c = get_object_or_404(Course, award=level, shorthand=shorthand)
     return HttpResponse(render_to_string('course_page.xhtml', {'course': c, 'levels': c.levels()}))
+
+def dependancies(request, code):
+    module = get_object_or_404(Module, code=code)
+    response = HttpResponse(render_to_string('dependancy.xhtml', {'module': module, 'list': module.as_tree_pres()}))
+    return response
+
+def successors(request, code):
+    module = get_object_or_404(Module, code=code)
+    response = HttpResponse(render_to_string('dependancy.xhtml', {'module': module, 'list': module.as_tree_succs()}))
+    return response

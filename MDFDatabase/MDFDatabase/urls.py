@@ -11,5 +11,7 @@ urlpatterns = [
     path('staff', views.staff_index),
     url(r'staff/(?P<id_number>\d+)', views.staff_member),
     path('courses', views.course_index),
-    url(r'courses/(?P<level>[A-Za-z]+)_(?P<shorthand>[A-Za-z]+)', views.course)
+    url(r'courses/(?P<level>[A-Za-z]+)_(?P<shorthand>[A-Za-z]+)', views.course),
+    url(r'predecessors/(?P<code>[A-Za-z0-9]{5})', views.dependancies),
+    url(r'successors/(?P<code>[A-Za-z0-9]{5})', views.successors),
 ]

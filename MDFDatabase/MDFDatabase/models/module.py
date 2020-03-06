@@ -20,7 +20,7 @@ class Module(models.Model):
     comments = models.TextField(default='', blank=True)
     reading = models.TextField(default='', blank=True)
     required_modules = models.ManyToManyField(
-        'Module', related_name='requirements', blank=True
+        'Module', related_name='required_for', blank=True
     )
     lecture_hours = models.IntegerField(default=0)
     tutorial_hours = models.IntegerField(default=0)
@@ -37,11 +37,17 @@ class Module(models.Model):
                 + self.study_hours
                 )
 
-    def list_pre_requisites(self) -> str:
-        return ', '.join(['<a href="%(s)s"> %(s)s</a>' % {'s':m.code} for m in self.required_modules.all()])
+    def pre_requisites(self):
+        return self.required_modules.all()
 
-    def list_required_for(self) -> str:
-        return ', '.join(['<a href="%(s)s"> %(s)s</a>' % {'s': m.code} for m in self.requirements.all()])
+    def successors(self):
+        return self.required_for.all()
+
+    def list_pre_requisites(self) -> str:
+        return ', '.join(['<a href="%(s)s"> %(s)s</a>' % {'s':m.code} for m in self.pre_requisites()])
+
+    def list_successors(self) -> str:
+        return ', '.join(['<a href="%(s)s"> %(s)s</a>' % {'s': m.code} for m in self.successors()])
 
 
     def staff(self):
@@ -65,14 +71,20 @@ class Module(models.Model):
 
     def __str__(self) -> str: return "%s : %s" % (self.code, self.name)
 
-    def as_tree(self) -> List[str]:
-        out = [self.code]
-        for subtree in self.required_modules.all():
-            out += ['- - > ' + str(s) for s in subtree.as_tree()]
+    def as_tree_pres(self) -> List[str]:
+        out = ["--> " + self.code +": " + self.name + "<br><br>"]
+        for subtree in self.pre_requisites():
+            out += ['&emsp;' + str(s) for s in subtree.as_tree_pres()]
+        return out
+
+    def as_tree_succs(self) -> List[str]:
+        out = ["--> " + self.code +": " + self.name + "<br><br>"]
+        for subtree in self.successors():
+            out += ['&emsp;' + str(s) for s in subtree.as_tree_succs()]
         return out
 
     def as_tree_string(self) -> str:
-        return '\n'.join(self.as_tree())
+        return '\n'.join(self.as_tree_pres())
 
     def iterable_assessments(self):
         out = []
