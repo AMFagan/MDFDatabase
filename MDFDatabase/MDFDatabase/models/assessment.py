@@ -21,13 +21,13 @@ class Assessment(models.Model):
 
 
 class Exam(Assessment):
-    duration = models.IntegerField()
+    duration = models.FloatField()
 
     def __str__(self):
         return super().__str__().replace('Assessment', 'Exam')
 
     def simple_str(self):
-        return "%s Exam" % self.module.code
+        return "%s Exam (%0.2f%%)" % (self.module.code, self.weight)
 
 class Coursework(Assessment):
 
@@ -35,7 +35,7 @@ class Coursework(Assessment):
         return super().__str__().replace('Assessment', 'Coursework')
 
     def simple_str(self):
-        return "%s Coursework" % self.module.code
+        return "%s Coursework (%0.2f%%)" % (self.module.code, self.weight)
 
 class Project(Assessment):
 
@@ -43,4 +43,4 @@ class Project(Assessment):
         return super().__str__().replace('Assessment', 'Project')
 
     def simple_str(self):
-        return "%s Project" % self.module.code
+        return "%s Project (%0.2f%%)" % (self.module.code, self.weight)

@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from openpyxl import load_workbook
-from . import Module
+from . import Module, Coursework, Exam, Project
 
 
 def batch_upload(filename: str):
@@ -46,4 +46,39 @@ def batch_upload(filename: str):
                         newm.save()
                         m.required_modules.add(newm)
                 m.save()
+    wb.close()
+
+
+def batch_upload_cw(filename: str):
+    wb = load_workbook(filename=filename)
+    for sheet in wb.worksheets:
+            for line in sheet.iter_rows(2, values_only=True):
+                if not line[0]:
+                    continue
+
+                if line[1] == 'C':
+                    c = Coursework()
+                    c.module = get_object_or_404(Module, code=line[0])
+                    c.semester= str(line[2] or '')
+                    c.week=str(line[3] or '')
+                    c.weight=float(line[4] or 0.0)
+                    c.information=str(line[5] or '')
+                    c.save()
+                elif line[1] == 'E':
+                    e = Exam()
+                    e.module = get_object_or_404(Module, code=line[0])
+                    e.semester = str(line[2] or '')
+                    e.week = str(line[3] or '')
+                    e.weight = float(line[4] or 0.0)
+                    e.information = str(line[5] or '')
+                    e.duration = float(line[6] or 0.0)
+                    e.save()
+                elif line[1] == 'P':
+                    p = Project()
+                    p.module = get_object_or_404(Module, code=line[0])
+                    p.semester= str(line[2] or '')
+                    p.week=str(line[3] or '')
+                    p.weight=float(line[4] or 0.0)
+                    p.information=str(line[5] or '')
+                    p.save()
     wb.close()

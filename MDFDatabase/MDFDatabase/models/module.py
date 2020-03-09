@@ -2,7 +2,7 @@ from typing import List
 
 from django.db import models
 
-from .choices import Semester, ElectiveOptions, Levels, StaffRoles
+from .choices import Semester, ElectiveOptions, Levels, StaffRoles, Week
 
 
 class Module(models.Model):
@@ -88,44 +88,35 @@ class Module(models.Model):
 
     def iterable_assessments(self):
         out = []
-        for e in self.exam_set.all():
+        for e in sorted(self.exam_set.all(), key=lambda x: Semester(x.semester).label):
             d = []
             d.append('Examination')
             d.append('Duration')
             d.append(e.duration)
-            d.append('Weighting (%)')
-            d.append(e.weight)
-            d.append('S')
-            d.append(e.semester)
-            d.append('W')
-            d.append(e.week)
+            d.append('Weighting %0.2f%%' % e.weight)
+            d.append('Semester ' + Semester(e.semester).label)
+            d.append('Week ' + Week(e.week).label if e.week != 'E' else Week(e.week).label)
             out += [d]
         i = 1
-        for c in self.coursework_set.all():
+        for c in sorted(self.coursework_set.all(), key=lambda x: Semester(x.semester).label):
             d = []
             d.append('Coursework')
             d.append('Number')
             d.append(i)
-            d.append('Weighting (%)')
-            d.append(c.weight)
-            d.append('S')
-            d.append(c.semester)
-            d.append('W')
-            d.append(c.week)
+            d.append('Weighting %0.2f%%' % c.weight)
+            d.append('Semester ' + c.semester)
+            d.append('Week ' + Week(c.week).label if c.week != 'E' else Week(c.week).label)
             out += [d]
             i += 1
         i = 1
-        for p in self.project_set.all():
+        for p in sorted(self.project_set.all(), key=lambda x: Semester(x.semester).label):
             d = []
             d.append('Project')
             d.append('Number')
             d.append(i)
-            d.append('Weighting (%)')
-            d.append(p.weight)
-            d.append('S')
-            d.append(p.semester)
-            d.append('W')
-            d.append(p.week)
+            d.append('Weighting %0.2f%%' % p.weight)
+            d.append('Semester ' + p.semester)
+            d.append('Week ' + Week(p.week).label if p.week != 'E' else Week(p.week).label)
             out += [d]
             i += 1
         return out

@@ -1,8 +1,14 @@
 <html>
 <head>
-    <style>table, td {
+     <style>td {
         border: 1px solid black;
         border-collapse: collapse;
+    }</style>
+    <style>table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
     }</style>
     <title>{{ module.code }} MDF</title>
 </head>
@@ -29,10 +35,10 @@
                 <td colspan="2">Academic Level: {{ module.level }}</td>
             </tr>
             <tr>
-                <td colspan="4">Pre-requisites: {{ module.list_pre_requisites |safe }}</td>
+                <td colspan="4">Pre-requisites: {{ module.list_pre_requisites | safe }}</td>
             </tr>
             <tr>
-                <td colspan="4">Required For: {{ module.list_required_for |safe }}</td>
+                <td colspan="4">Required For: {{ module.list_successors| safe }}</td>
             </tr>
         </tbody>
     </table>
@@ -108,8 +114,8 @@
     <table>
         <tbody>
         <tr>
-            <td colspan='8'>To Pass the module, students need to gain a summative mark of: </td>
-            <td>40</td>
+            <td colspan='5'>To Pass the module, students need to gain a summative mark of: </td>
+            <td>40%</td>
         </tr>
         {% for line in module.iterable_assessments %}
             <tr>
