@@ -72,13 +72,13 @@ class Module(models.Model):
     def __str__(self) -> str: return "%s : %s" % (self.code, self.name)
 
     def as_tree_pres(self) -> List[str]:
-        out = ["--> " + self.code +": " + self.name + "<br><br>"]
+        out = ["--> %s: %s<br><br>" % (self.code, self.name)]
         for subtree in self.pre_requisites():
             out += ['&emsp;' + str(s) for s in subtree.as_tree_pres()]
         return out
 
     def as_tree_succs(self) -> List[str]:
-        out = ["--> " + self.code +": " + self.name + "<br><br>"]
+        out = ["--> %s: %s<br><br>" % (self.code, self.name)]
         for subtree in self.successors():
             out += ['&emsp;' + str(s) for s in subtree.as_tree_succs()]
         return out

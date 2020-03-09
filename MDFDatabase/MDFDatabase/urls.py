@@ -6,11 +6,11 @@ from . import views
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-    path('modules', views.module_index),
+    path('modules/', views.module_index),
     url(r'modules/(?P<code>[A-Za-z0-9]{5})', views.mdf_test),
-    path('staff', views.staff_index),
+    path('staff/', views.staff_index),
     url(r'staff/(?P<id_number>\d+)', views.staff_member),
-    path('courses', views.course_index),
+    path('courses/', views.course_index),
     url(r'courses/(?P<level>[A-Za-z]+)_(?P<shorthand>[A-Za-z]+)', views.course),
     url(r'predecessors/(?P<code>[A-Za-z0-9]{5})', views.dependancies),
     url(r'successors/(?P<code>[A-Za-z0-9]{5})', views.successors),
