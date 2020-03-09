@@ -153,4 +153,4 @@ class Module(models.Model):
         return Semester(self.semester).label
 
     def elective_printable(self):
-        return ElectiveOptions(self.semester).label
+        return ElectiveOptions(self.elective).label
