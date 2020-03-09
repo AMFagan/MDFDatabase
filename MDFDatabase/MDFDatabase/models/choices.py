@@ -3,10 +3,10 @@ from django.db import models
 
 class Semester(models.TextChoices):
     ONE = '1', '1'
-    ONETWO = '2', '1/2'
-    TWO = '3', '2'
-    TWOTHREE = '4', '2/3'
-    THREE = '5', '3'
+    ONETWO = '4', '1/2'
+    TWO = '2', '2'
+    TWOTHREE = '5', '2/3'
+    THREE = '3', '3'
     ALL = '6', '1/2/3'
 
 

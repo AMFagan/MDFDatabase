@@ -1,8 +1,14 @@
 <html>
 <head>
-     <style>table, td {
+     <style>td {
         border: 1px solid black;
         border-collapse: collapse;
+    }</style>
+    <style>table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
     }</style>
     <title> {{ course }}</title>
 </head>
@@ -32,7 +38,7 @@
                 <tr>
                     <td>{{ module }}</td>
                     {% for week, val in modulevalues.items %}
-                        <td>{{val}}</td>
+                        <td>{{val | safe}}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
