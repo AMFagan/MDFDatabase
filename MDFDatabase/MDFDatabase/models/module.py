@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, re
 
 from django.db import models
 
@@ -148,3 +148,9 @@ class Module(models.Model):
             for week in out[level]:
                 out[level][week] = "<br/>".join(out[level][week])
         return self.code, out
+
+    def semester_printable(self):
+        return Semester(self.semester).label
+
+    def elective_printable(self):
+        return ElectiveOptions(self.semester).label

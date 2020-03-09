@@ -2,6 +2,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from openpyxl import load_workbook
 from . import Module, Coursework, Exam, Project
+from .choices import Semester, ElectiveOptions
 
 
 def batch_upload(filename: str):
@@ -17,8 +18,8 @@ def batch_upload(filename: str):
                     m.code = str(line[0] or '')
                 m.name = str(line[1] or '')
                 m.credits = str(line[2] or 0)
-                m.semester = str(line[3] or '1/2')
-                m.elective = str(line[4] or 'NE')
+                m.semester = Semester.values[Semester.labels.index(str(line[3] or '1/2'))]
+                m.elective = ElectiveOptions.values[ElectiveOptions.labels.index(str(line[4] or 'NE'))]
                 m.level = str(line[5] or '1')
                 m.aims = str(line[6] or '')
                 m.learning_outcomes = str(line[7] or '')
