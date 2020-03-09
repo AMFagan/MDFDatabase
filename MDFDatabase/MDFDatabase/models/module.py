@@ -44,11 +44,10 @@ class Module(models.Model):
         return self.required_for.all()
 
     def list_pre_requisites(self) -> str:
-        return ', '.join(['<a href="%(s)s"> %(s)s</a>' % {'s':m.code} for m in self.pre_requisites()])
+        return ', '.join(['<a href="%(s)s"> %(s)s</a>' % {'s': m.code} for m in self.pre_requisites()])
 
     def list_successors(self) -> str:
         return ', '.join(['<a href="%(s)s"> %(s)s</a>' % {'s': m.code} for m in self.successors()])
-
 
     def staff(self):
         out = {}
@@ -69,7 +68,8 @@ class Module(models.Model):
                           for a in self.assignment_set.all()
                           if a.role == StaffRoles.REGISTRAR])
 
-    def __str__(self) -> str: return "%s : %s" % (self.code, self.name)
+    def __str__(self) -> str:
+        return "%s : %s" % (self.code, self.name)
 
     def as_tree_pres(self) -> List[str]:
         out = ["--> %s: %s<br><br>" % (self.code, self.name)]
@@ -134,31 +134,26 @@ class Module(models.Model):
         out = {'1': {
             '1': [], '2': [], '3': [], '4': [],
             '5': [], '6': [], '7': [], '8': [],
-            '9': [], '10': [], '11': [], '12': [],
-            '13': []
-        },
+            '9': [], '10': [], '11': [], 'E': [],
+            },
             '2': {
                 '1': [], '2': [], '3': [], '4': [],
                 '5': [], '6': [], '7': [], '8': [],
-                '9': [], '10': [], '11': [], '12': [],
-                '13': []
+                '9': [], '10': [], '11': [], 'E': [],
             },
             '3': {
                 '1': [], '2': [], '3': [], '4': [],
                 '5': [], '6': [], '7': [], '8': [],
-                '9': [], '10': [], '11': [], '12': [],
-                '13': []
+                '9': [], '10': [], '11': [], 'E': [],
             },
         }
         for coursework in self.coursework_set.all():
-            out[coursework.semester][coursework.week] += [coursework]
+            out[coursework.semester][coursework.week] += [coursework.simple_str()]
         for project in self.project_set.all():
-            out[project.semester][project.week] += [project]
+            out[project.semester][project.week] += [project.simple_str()]
         for exam in self.exam_set.all():
-            out[exam.semester][exam.week] += [exam]
-        return out
-
-
-
-
-
+            out[exam.semester][exam.week] += [exam.simple_str()]
+        for level in out:
+            for week in out[level]:
+                out[level][week] = "<br/>".join(out[level][week])
+        return self.code, out

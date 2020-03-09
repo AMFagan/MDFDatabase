@@ -8,36 +8,36 @@
 </head>
 <body>
 <h3> {{ course }} </h3>
-<table>
-    <tr>
-        <td>Level</td>
-        <td>Semester</td>
-        <td>W1</td>
-        <td>W2</td>
-        <td>W3</td>
-        <td>W4</td>
-        <td>W5</td>
-        <td>W6</td>
-        <td>W7</td>
-        <td>W8</td>
-        <td>W9</td>
-        <td>W10</td>
-        <td>W11</td>
-        <td>W12</td>
-        <td>E</td>
-    </tr>
-    {% for level, levelvalues in levels.items %}
-        {% for semester, semestervalues in levelvalues.items %}
+{% for level, levelvalues in levels.items %}
+    <h4>Year {{ level }}</h4>
+    {% for semester, semestervalues in levelvalues.items %}
+        <h5>Semester {{ semester }}</h5>
+        <table>
             <tr>
-            <td> {{ level }}</td>
-            <td> {{ semester }}</td>
-            {% for week, assignment in semestervalues.items %}
-                <td>{% for a in assignment %}{{a}}{% if forloop.last is not True %}<br/>{% endif %}{% endfor %}</td>
-            {% endfor %}
+                <td>Module</td>
+                <td>W1</td>
+                <td>W2</td>
+                <td>W3</td>
+                <td>W4</td>
+                <td>W5</td>
+                <td>W6</td>
+                <td>W7</td>
+                <td>W8</td>
+                <td>W9</td>
+                <td>W10</td>
+                <td>W11</td>
+                <td>E</td>
             </tr>
-        {% endfor %}
+            {% for module, modulevalues in semestervalues.items %}
+                <tr>
+                    <td>{{ module }}</td>
+                    {% for week, val in modulevalues.items %}
+                        <td>{{val}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
     {% endfor %}
-
-</table>
+{% endfor %}
 </body>
 </html>

@@ -18,22 +18,25 @@ class Course(models.Model):
         for mem in self.coursemembership_set.all():
             #print(out)
             if mem.level not in out:
-                out[mem.level] = mem.module.semesters()
-                continue
-            sems = mem.module.semesters()
+                out[mem.level] = {}
+            code, sems = mem.module.semesters()
             #print('%s %s' % (mem.module, sems)) # Def have module
-            for semester in sems:
-                #print(sems[semester])
-                for week in sems[semester]:
-                    #print('##%s##\n{{%s}}' % (out[mem.level][semester][week], sems[semester][week]))
-                    out[mem.level][semester][week] += sems[semester][week]
+            for s in sems:
+                if s not in out[mem.level]:
+                    out[mem.level][s] = {}
+                out[mem.level][s][code] = sems[s]
 
-
-        for ls in list(out.keys()):
+        for ls in out:
             for sem in list(out[ls].keys()):
                 i = 0
-                for w in out[ls][sem]:
-                    i += len(out[ls][sem][w])
+                for m in list(out[ls][sem].keys()):
+                    j = 0
+                    for w in list(out[ls][sem][m].keys()):
+                        if out[ls][sem][m][w] != "":
+                            i += 1
+                            j += 1
+                    if j == 0:
+                        del out[ls][sem][m]
                 if i == 0:
                     del out[ls][sem]
         return out
@@ -47,3 +50,10 @@ class CourseMembership(models.Model):
     def __str__(self):
         return "%s students can take %s in year %s (%s)" % (self.course, self.module, self.level, self.elective)
 
+
+def helper(ls):
+    for l in ls:
+        print("Level " + l)
+        for s in ls[l]:
+            print("Semester " + s)
+            print(ls[l][s])

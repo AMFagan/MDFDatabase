@@ -22,8 +22,7 @@ class Week(models.TextChoices):
     NINE = '9', '9'
     TEN = '10', '10'
     ELEVEN = '11', '11'
-    TWELVE = '12', '12'
-    EXAM = '13', 'Exam Period'
+    EXAM = 'E', 'Exam Period'
 
 
 class StaffRoles(models.TextChoices):
