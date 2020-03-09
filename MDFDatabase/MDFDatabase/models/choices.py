@@ -9,6 +9,7 @@ class Semester(models.TextChoices):
     THREE = '3', '3'
     ALL = '6', '1/2/3'
 
+ReducedSemester = [Semester.choices[0], Semester.choices[2], Semester.choices[4]]
 
 class Week(models.TextChoices):
     ONE = '1', '1'

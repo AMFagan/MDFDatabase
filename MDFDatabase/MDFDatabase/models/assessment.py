@@ -1,13 +1,13 @@
 from django.db import models
 from . import Module
-from .choices import Semester, Week
+from .choices import Semester, ReducedSemester, Week
 
 
 class Assessment(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
-    semester = models.TextField(max_length=1, choices=Semester.choices)
+    semester = models.TextField(max_length=1, choices=ReducedSemester)
     week = models.TextField(max_length=2, choices=Week.choices)
-    weight = models.IntegerField(default=0)
+    weight = models.FloatField(default=0.0)
     information = models.TextField()
 
     class Meta:
