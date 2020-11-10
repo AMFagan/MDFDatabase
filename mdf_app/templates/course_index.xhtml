@@ -1,0 +1,34 @@
+<html>
+<head>
+     <style>table, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <title>Course Index</title>
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href=".."> Index </a> </h3>
+<h3> Course Index </h3>
+<table>
+    <tr>
+        <td>Award</td>
+        <td>Course</td>
+        <td>Name</td>
+    </tr>
+    {% for s in entries %}
+        <tr>
+            <td>
+                <a href="{{ s.id }}"> {{ s.award }} </a>
+            </td>
+            <td>
+                <a href="{{ s.id }}"> {{ s.shorthand }} </a>
+            </td>
+            <td>
+                <a href="{{ s.id }}"> {{ s.name }} </a>
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>

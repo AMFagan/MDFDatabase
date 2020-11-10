@@ -1,0 +1,187 @@
+<html>
+<head>
+     <style>td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <style>table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+    }</style>
+    <title>{{ module.code }} MDF</title>
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href=".."> Back </a> </h3>
+<h3> <a href="pdf"> Generate PDF </a>| <a href="duties"> Duties </a>| Last Updated {{ module.updated_at  | date:"d-m-Y"}}</h3>
+    <h3>FACULTY OF ENGINEERING</h3>
+    <h3>MODULE DESCRIPTION FORM</h3>
+    <h3>{{ module.code }} - {{ module.name }}</h3>
+    <table>
+            <tbody>
+            <tr>
+                <td colspan="2">Module Code: {{ module.code }}</td>
+                <td colspan="2">Module Title: {{ module.name }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">Module Registrar: {{ module.registrars }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Other Staff Involved: {{ module.other_staff }}</td>
+                <td>Credit Weighting: {{ module.credits }}</td>
+                <td>Semester: {{ module.semester_printable }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Compulsory/optional/elective class: {{ module.elective_printable }}</td>
+                <td colspan="2">Academic Level: {{ module.level }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">Pre-requisites: {{ module.list_pre_requisites | safe }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">Required For: {{ module.list_successors| safe }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>Module Format and Delivery (hours):</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td>Lectures</td>
+            <td>Tutorial</td>
+            <td>Assignments</td>
+            <td>Laboratories</td>
+            <td>Private Study</td>
+            <td>Total</td>
+        </tr>
+        <tr>
+            <td>{{ module.lecture_hours }}</td>
+            <td>{{ module.tutorial_hours }}</td>
+            <td>{{ module.assignment_hours }}</td>
+            <td>{{ module.lab_hours }}</td>
+            <td>{{ module.study_hours }}</td>
+            <td>{{ module.total_hours }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Educational Aim</h3>
+    <p><em>This Module aims to:</em></p>
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ module.aims | linebreaks }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Learning Outcomes</h3>
+    <p><em>On Completion of the module, the student is expected to be able to:</em></p>
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ module.learning_outcomes | linebreaks }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p><em>(UK SPEC suggests no more than 4 learning outcomes per module. Statements must be broad and be syllabus free and
+        link in with the intended learning outcomes on the programme specifications.)</em></p>
+    <h3>Syllabus</h3>
+    <p><em>The module will teach the following:</em></p>
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ module.syllabus | linebreaks }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Assessment of Learning Outcomes - Criteria</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ module.criteria | linebreaks }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p><em>The standards set for each criterion per Module Learning Outcome to achieve a pass grade are indicated on the
+        assessment sheet for all assessment.</em></p>
+    <h3>Principles of Assessment Feedback</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ module.feedback | linebreaks }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Assessment Method(s) Including Percentage Breakdown and Duration of Exams</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td colspan='5'>To Pass the module, students need to gain a summative mark of: </td>
+            <td>{{module.passmark}}%</td>
+        </tr>
+        {% for line in module.iterable_assessments %}
+            <tr>
+                {% for entry in line %}
+                    <td>{{ entry | safe }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if module.comments %}
+    <h3>Additional Information</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ module.comments | linebreaks }}</td>
+        </tr>
+        </tbody>
+    </table>
+    {% endif %}
+    <h3>Resit Procedure</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ module.resit | linebreaks }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Recommended Reading</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ module.reading | linebreaks }}</td>
+        </tr>
+        </tbody>
+    </table>
+	<h3>Date of Last Modification</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ module.updated_at | date:"d-m-Y" }}</td>
+        </tr>
+        </tbody>
+    </table>
+	<h3>Module Timetable</h3>
+	<table>
+    {% for week, weeks in schedule.items %}
+		<tr>
+		<td> {{week}} </td>
+		{% for semester, val in weeks.items %}
+				<td>
+					{{val | safe}}
+				</td>
+		{% endfor %}
+		</tr>
+    {% endfor %}
+	</table>
+	<h3>Learning Outcomes - Criteria</h3>
+    <table>
+        <tbody>
+        <tr>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

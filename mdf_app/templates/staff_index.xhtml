@@ -1,0 +1,28 @@
+<html>
+<head>
+     <style>table, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <title>Staff Index</title>
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href=".."> Back </a> </h3>
+<h3> Staff Index </h3>
+<h3><a href="all_surname">All duties</a></h3>
+<table>
+    <tr>
+        <td>Name</td>
+    </tr>
+    {% for s in entries %}
+        <tr>
+            <td>
+                <a href="{{ s.personnel_id }}"> {{ s.full_name }} </a>
+            </td>
+
+        </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>

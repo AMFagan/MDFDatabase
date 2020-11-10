@@ -1,0 +1,66 @@
+<html>
+<head>
+     <style>td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <style>table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+    }</style>
+    <title>{{ module.code }} MDF</title>
+</head>
+<body>
+	<h3> <a href="/"> Home </a> | <a href=".."> Back </a> </h3>
+    <h3>{{ module.code }} - {{ module.name }}</h3>
+	<table>
+	    <tbody>
+            <tr>
+                <td>Semester: {{ module.semester_printable }}</td>
+                <td>Academic Level: {{ module.level }}</td>
+                <td>Credit Weighting: {{ module.credits }}</td>
+        </tbody>
+    </table>
+
+	<h3> Duties </h3>
+    <table>
+            <tbody>
+            <tr>
+				<td>Name</td>
+				<td>Lectures</td>
+				<td>Tutorials</td>
+				<td>Labs</td>
+				<td>Overheads</td>
+                <td>Role</td>
+            </tr>
+            <tr>
+                <td><b>Contact Time</b></td>
+				<td>{{ module.lecture_hours }}</td>
+				<td>{{ module.tutorial_hours }}</td>
+				<td>{{ module.lab_hours }}</td>
+				<td>N/A</td>
+				<td></td>
+            </tr>
+			<tr>
+                <td><b>Staff Time</b></td>
+				{% for duty in module.total_duty %}
+				<td>{{ duty }}</td>
+				{% endfor %}
+				<td></td>
+            </tr>
+			{% for duty in module.get_duties %}
+			<tr>
+                <td>{{ duty.assignee }}</td>
+				<td>{{ duty.lecture_hours }}</td>
+				<td>{{ duty.tutorial_hours }}</td>
+				<td>{{ duty.lab_hours }}</td>
+				<td>{{ duty.overhead_hours }}</td>
+				<td>{{ duty.role_str }}</td>
+            </tr>
+			{% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

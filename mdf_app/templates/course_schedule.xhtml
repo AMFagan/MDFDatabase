@@ -1,0 +1,50 @@
+<html>
+<head>
+     <style>td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <style>table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+    }</style>
+    <title> {{ course }}</title>
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href="."> Back </a> </h3>
+<h3> {{ course }} </h3>
+{% for level, levelvalues in levels.items %}
+    <h4>Year {{ level }}</h4>
+    {% for semester, semestervalues in levelvalues.items %}
+        <h5>Semester {{ semester }}</h5>
+        <table>
+            <tr>
+                <td>Module</td>
+                <td>W1</td>
+                <td>W2</td>
+                <td>W3</td>
+                <td>W4</td>
+                <td>W5</td>
+                <td>W6</td>
+                <td>W7</td>
+                <td>W8</td>
+                <td>W9</td>
+                <td>W10</td>
+                <td>W11</td>
+                <td>E</td>
+            </tr>
+            {% for module, modulevalues in semestervalues.items %}
+                <tr>
+                    <td>{{ module }}</td>
+                    {% for week, val in modulevalues.items %}
+                        <td>{{val | safe}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+{% endfor %}
+</body>
+</html>

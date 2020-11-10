@@ -1,0 +1,62 @@
+<html>
+<head>
+     <style>td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <style>table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+    }</style>
+    <title> {{ course }}</title>
+	
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href="."> Back </a> </h3>
+<h3> {{ course }} Year {{ year }} </h3>
+<table>
+	<tr>
+		<td colspan="3">Module</td>
+		<td colspan="2">Registrar</td>
+		<td>Credits</td>
+		<td>Semester</td>
+		<td>C/O/E</td>
+		<td>Lectures</td>
+		<td>Tutorial</td>
+		<td>Assignments</td>
+		<td>Laboratories</td>
+		<td>Private Study</td>
+		<td>Total</td>
+	</tr>
+	{% for mem in mems %}
+	{% with module=mem.module %}
+			<tr>
+				<td colspan="3">
+					<a href ="/modules/{{ module.code }}">{{module.code}} - {{module.name}}</a>
+				</td>
+				<td colspan="2">
+					{{module.registrars}}
+				</td>
+				<td>
+					{{module.credits}}
+				</td>
+				<td>
+					{{module.semester_printable}}
+				</td>
+				<td>
+					{{mem.elective_printable}}
+				</td>
+				<td>{{ module.lecture_hours }}</td>
+				<td>{{ module.tutorial_hours }}</td>
+				<td>{{ module.assignment_hours }}</td>
+				<td>{{ module.lab_hours }}</td>
+				<td>{{ module.study_hours }}</td>
+				<td>{{ module.total_hours }}</td>
+			</tr>
+	{% endwith %}
+	{% endfor %}
+</table>
+</body>
+</html>

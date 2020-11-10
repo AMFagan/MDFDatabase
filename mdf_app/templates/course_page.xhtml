@@ -1,0 +1,28 @@
+<html>
+<head>
+     <style>td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <style>table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+    }</style>
+    <title> {{ course }}</title>
+	
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href=".."> Back </a> </h3>
+<h3> {{ course }} </h3>
+<h4> <a href="schedule"> View Assessment Schedule </a> </h4>
+<h4>Click a year for a detailed view</h4>
+{% for level, levelvalues in levels.items %}
+    <h4><a href="{{level}}">Year {{ level }}<a></h4>
+    {% for module in levelvalues %}
+        <a href="/modules/{{ module.code }}"> {{ module.code }} - {{ module.name }} <br></a>
+    {% endfor %}
+{% endfor %}
+</body>
+</html>

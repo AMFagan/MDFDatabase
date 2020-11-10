@@ -1,0 +1,11 @@
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href="."> Back </a> </h3>
+    {% for dependancy in list %}
+        {{ dependancy | safe }}
+    {% endfor %}
+</body>
+</html>

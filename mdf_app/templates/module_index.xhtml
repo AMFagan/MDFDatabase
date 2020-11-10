@@ -1,0 +1,31 @@
+<html>
+<head>
+     <style>table, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <title>{{ title }}</title>
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href=".."> Back </a></h3>
+<h3> {{ title }} </h3>
+<table>
+    <tr>
+        <td>Code</td>
+        <td>Name</td>
+    </tr>
+    {% for m in entries %}
+        <tr>
+            <td>
+                <a href="{{ m.code }}"> {{ m.code }} </a>
+            </td>
+            <td>
+                {{ m.name }}
+            </td>
+
+        </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>

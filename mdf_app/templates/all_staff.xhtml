@@ -1,0 +1,58 @@
+<html>
+<head>
+     <style>table, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <title>Staff Index</title>
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href=".."> Back </a> </h3>
+<h3> Order By <a href="../all_surname/"> Surname </a> | <a href="../all_hours/"> Hours </a> </h3>
+<h3> All Staff </h3>
+    {% for staff in entries %}
+		<h4> {{staff.full_name}} </h4>
+		<table>
+				<tbody>
+				<tr>
+					<td>Module</td>
+					<td>Role</td>
+					<td>Lectures</td>
+					<td>Tutorials</td>
+					<td>Labs</td>
+					<td>Overheads</td>
+					<td><b>Total</b></td>
+				</tr>
+				{% for duty in staff.get_duties %}
+				<tr>
+					<td> <a href="/modules/{{duty.code}}"> {{duty.code }} </td>
+					<td>{{ duty.role_str }}</td>
+					<td>{{ duty.lecture_hours }}</td>
+					<td>{{ duty.tutorial_hours }}</td>
+					<td>{{ duty.lab_hours }}</td>
+					<td>{{ duty.overhead_hours }}</td>
+					<td><b>{{ duty.total_duty }}</b></td>
+				</tr>
+				{% endfor %}
+				{% for duty in staff.get_admins %}
+				<tr>
+					<td>{{duty.code }} </td>
+					<td colspan=4>{{ duty.description }}</td>
+					<td>{{ duty.hours }}</td>
+					<td><b>{{ duty.hours }}</b></td>
+				</tr>
+				{% endfor %}
+				<tr>
+					<td colspan=2><b>Total</b></td>
+					{% for h in staff.total_duty %}
+					<td><b>{{ h }}</b></td>
+					{% endfor %}
+					<td><b>{{staff.absolute_total}}</b></td>
+				</tr>
+			</tbody>
+		</table>
+    {% endfor %}
+
+</table>
+</body>
+</html>

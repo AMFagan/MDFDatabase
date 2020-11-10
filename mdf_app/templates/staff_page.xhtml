@@ -1,0 +1,81 @@
+<html>
+<head>
+     <style>table, td {
+		padding: 3px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }</style>
+    <title> {{ staff.full_name }}</title>
+</head>
+<body>
+<h3> <a href="/"> Home </a> | <a href="."> Back </a> </h3>
+<h3> {{ staff.full_name }} </h3>
+<table>
+	<tbody>
+		<tr>
+			<td> ID </td>
+			<td> Title </td>
+			<td> Salutation </td>
+			<td> Forename(s) </td>
+			<td> Surname </td>
+		</tr>
+		<tr>
+			<td>{{ staff.personnel_id }}</td>
+			<td>{{ staff.title }}</td>
+			<td>{{ staff.salutation }}</td>
+			<td>{{ staff.forename }}</td>
+			<td>{{ staff.surname }}</td>
+			
+		</tr>
+		<tr>
+			<td colspan  =2>Job Title</td>
+			<td colspan = 3>{{ staff.job_title }}</td>
+		</tr>
+		<tr>
+			<td colspan  =2>Email</td>
+			<td colspan = 3><a href ="mailto:{{ staff.email }}">{{ staff.email }}</a></td>
+		</tr>
+	</tbody>
+</table>
+<h3> Duties </h3>
+    <table>
+            <tbody>
+            <tr>
+				<td>Module</td>
+                <td>Role</td>
+				<td>Lectures</td>
+				<td>Tutorials</td>
+				<td>Labs</td>
+				<td>Overheads</td>
+				<td><b>Total</b></td>
+            </tr>
+			{% for duty in duties %}
+			<tr>
+				<td> <a href="/modules/{{duty.code}}"> {{duty.code }} </td>
+                <td>{{ duty.role_str }}</td>
+				<td>{{ duty.lecture_hours }}</td>
+				<td>{{ duty.tutorial_hours }}</td>
+				<td>{{ duty.lab_hours }}</td>
+				<td>{{ duty.overhead_hours }}</td>
+				<td><b>{{ duty.total_duty }}</b></td>
+            </tr>
+			{% endfor %}
+			{% for duty in admin %}
+			<tr>
+				<td>{{duty.code }} </td>
+                <td colspan=4>{{ duty.description }}</td>
+				<td>{{ duty.hours }}</td>
+				<td><b>{{ duty.hours }}</b></td>
+            </tr>
+			{% endfor %}
+			<tr>
+                <td colspan=2><b>Total</b></td>
+				{% for h in staff.total_duty %}
+				<td><b>{{ h }}</b></td>
+				{% endfor %}
+				<td><b>{{staff.absolute_total}}</b></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
